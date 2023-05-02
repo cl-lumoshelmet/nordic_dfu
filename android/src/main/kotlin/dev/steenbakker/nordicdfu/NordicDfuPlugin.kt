@@ -84,6 +84,7 @@ class NordicDfuPlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHan
         val numberOfPackets = call.argument<Int>("numberOfPackets")
         val dataDelay = call.argument<Int>("dataDelay")
         val numberOfRetries = call.argument<Int>("numberOfRetries")
+        val forceScanningForNewAddressInLegacyDfu = call.argument<Boolean>("forceScanningForNewAddressInLegacyDfu")
 
         if (fileInAsset == null) fileInAsset = false
         if (address == null || filePath == null) {
@@ -120,7 +121,8 @@ class NordicDfuPlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHan
             result,
             numberOfPackets,
             dataDelay,
-            numberOfRetries
+            numberOfRetries,
+            forceScanningForNewAddressInLegacyDfu
         )
     }
 
@@ -145,6 +147,7 @@ class NordicDfuPlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHan
         numberOfPackets: Int?,
         dataDelay: Int?,
         numberOfRetries: Int?
+        forceScanningForNewAddressInLegacyDfu: Boolean?
     ) {
 
         val starter = DfuServiceInitiator(address).setZip(filePath)
@@ -171,6 +174,9 @@ class NordicDfuPlugin : FlutterPlugin, MethodCallHandler, EventChannel.StreamHan
         }
         if (numberOfRetries != null) {
             starter.setNumberOfRetries(numberOfRetries)
+        }
+        if (forceScanningForNewAddressInLegacyDfu != null) {
+            starter.setForceScanningForNewAddressInLegacyDfu(forceScanningForNewAddressInLegacyDfu)
         }
 
         pendingResult = result

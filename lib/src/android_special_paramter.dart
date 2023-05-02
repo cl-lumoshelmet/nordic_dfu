@@ -67,6 +67,7 @@ class AndroidSpecialParameter {
   ///
   /// Default: 10
   final int numberOfRetries;
+  final bool forceScanningForNewAddressInLegacyDfu;
 
   const AndroidSpecialParameter({
     this.disableNotification,
@@ -76,6 +77,7 @@ class AndroidSpecialParameter {
     this.startAsForegroundService,
     this.dataDelay = 400,
     this.numberOfRetries = 10,
+    this.forceScanningForNewAddressInLegacyDfu = false,
   });
 
   Map<String, dynamic> toJson() => {
